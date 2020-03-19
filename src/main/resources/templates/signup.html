@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>회원등록</title>
+<title>Sign Up</title>
 </head>
 <body>
-	<h1>등록</h1>
-	<form action="#" th:action="@{/register}" th:object="${member}" method="post">
+	<h1>Sign Up</h1>
+	<form action="#" th:action="@{/signup}" th:object="${member}" method="post">
 	    <p>EMAIL : <input type="text" th:field="*{email}"/></p>
 	    <p>PASSWORD : <input type="password" th:field="*{pw}"/></p>
-	    <p><input type="submit" value="REGISTER"/> <input type="reset" value="RESET"/></p>
+	    <p><input type="submit" value="Sign Up"/> <input type="reset" value="RESET"/></p>
 	</form>
 </body>
 </html>

@@ -2,10 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>MAIN</title>
+<title>HOME</title>
 </head>
 <body>
-	<h1>메인 페이지(랜딩)</h1>
-	<a href="/register"><button>회원 등록</button></a>
+	<h1>HOME 랜딩</h1>
+	<p th:if="${session.account != null}" th:object="${session.account}">
+		<span style="font-style: italic;" th:text="*{email}"></span>님 반갑습니다!
+	</p>
+	<a th:if="${session.account == null}" href="/signup"><button>Sign Up</button></a>
+	<a th:if="${session.account == null}" href="/signin"><button>Sign In</button></a>
+	<a th:if="${session.account != null}" href="/main"><button>Main</button></a>
+	<a th:if="${session.account != null}" href="/signout"><button>Sign Out</button></a>
 </body>
 </html>

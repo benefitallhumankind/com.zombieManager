@@ -1,5 +1,7 @@
 package com.zombiegame.springboot.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,27 +27,40 @@ public class MemberController {
 		model.addAttribute("members", mService.getAllMembers());
 		return "memberList";
 	}
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String viewlogin() {
-		return "login";
-	}
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login() {
-		return "login";
-	}
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String viewRegister(Model model) {
+	@RequestMapping(value = "/signin", method = RequestMethod.GET)
+	public String viewSignIn(Model model) {
 		model.addAttribute("member", new Member());
-		return "register";
+		return "signin";
 	}
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	public String signIn(@ModelAttribute Member member, Model model, HttpSession session) {
+		String url = "/signin?error=true";
+		Member dbm = mService.getMemberByEmail(member.getEmail());
+		if( dbm!=null && member.getPw().equals(dbm.getPw())) {
+			session.setAttribute("account", dbm);
+			url = "/";
+		}
+		return "redirect:"+url;
+	}
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public String viewSignUp(Model model) {
+		model.addAttribute("member", new Member());
+		return "signup";
+	}
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String addMember(@ModelAttribute Member member, Model model) {
 		mService.addMember(member);
-		return "redirect:member/list";
+		return "redirect:/signin";
 	}
 	@RequestMapping("/member/delete/{id}")
 	public String deleteMember(@PathVariable Long id) {
 		mService.deleteMember(id);
 		return "redirect:/member/list";
+	}
+	
+	@RequestMapping(value = "/signout", method = RequestMethod.GET)
+	public String signOut(HttpSession session) {
+		session.invalidate();
+		return "redirect:/signin";
 	}
 }

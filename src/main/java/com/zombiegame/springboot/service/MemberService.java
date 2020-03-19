@@ -24,4 +24,8 @@ public class MemberService {	//인터페이스 생성안했음
 		return mRepository.findAll();
 	}
 	
+	public Member getMemberByEmail(String email) {
+		return mRepository.findByEmail(email);
+	}
+	
 }
