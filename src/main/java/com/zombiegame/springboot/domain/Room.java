@@ -2,7 +2,6 @@ package com.zombiegame.springboot.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,21 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table
-public class Member implements Serializable{
+public class Room implements Serializable{
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	
 	@Column
-	private String email;
+	private String name;
 	
 	@Column
 	private String pw;
@@ -33,8 +31,4 @@ public class Member implements Serializable{
 	@Column
 	@CreationTimestamp
 	private Date regDate;
-	
-	@Column
-	@UpdateTimestamp
-	private LocalDateTime updateDate;
 }
